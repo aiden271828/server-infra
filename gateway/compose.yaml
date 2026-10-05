@@ -12,7 +12,8 @@ services:
       - ./www:/var/www/root:ro
       - letsencrypt:/etc/letsencrypt:ro
       - certbot-webroot:/var/www/certbot:ro
-    networks: [edge]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     logging:
       driver: local
       options:
@@ -27,11 +28,6 @@ services:
     volumes:
       - letsencrypt:/etc/letsencrypt
       - certbot-webroot:/var/www/certbot
-
-networks:
-  edge:
-    name: edge
-    external: true
 
 volumes:
   letsencrypt:

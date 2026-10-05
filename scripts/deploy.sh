@@ -12,7 +12,6 @@ if [[ "$(git rev-parse origin/master)" != "$revision" ]]; then
 fi
 git checkout --detach "$revision"
 
-docker network inspect edge >/dev/null 2>&1 || docker network create edge >/dev/null
 docker compose -f gateway/compose.yaml config -q
 docker compose -f gateway/compose.yaml run --rm --no-deps nginx nginx -t
 docker compose -f gateway/compose.yaml up -d --pull always --remove-orphans

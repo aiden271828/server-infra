@@ -1,6 +1,5 @@
 # Copy the relevant blocks into a .conf file only after the TLS certificate has
-# been issued and its application service has joined the external Docker
-# network named `edge`.
+# been issued.
 #
 # server {
 #   listen 80;
@@ -40,7 +39,7 @@
 #   ssl_certificate /etc/letsencrypt/live/shenyuhan.online/fullchain.pem;
 #   ssl_certificate_key /etc/letsencrypt/live/shenyuhan.online/privkey.pem;
 #   location / {
-#     proxy_pass http://new-api:3000;
+#     proxy_pass http://host.docker.internal:3000;
 #     proxy_set_header Host $host;
 #     proxy_set_header X-Real-IP $remote_addr;
 #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
