@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body { margin: 0; min-height: 100vh; }
+    body { display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: system-ui, -apple-system, sans-serif; background: #fbf4e6; color: #794f27; }
+    h1 { font-size: 2rem; font-weight: 700; margin: 0; }
+    footer { position: fixed; left: 0; right: 0; bottom: 0; padding: 1rem; text-align: center; font-size: .72rem; color: #a08a6b; }
+    footer a { color: inherit; text-decoration-color: #d8c7a8; text-underline-offset: 3px; }
+    footer a:hover { color: #19c8b9; }
+    footer .sep { opacity: .6; margin: 0 .35rem; }
+  </style>
+</head>
+<body>
+  <h1>Hello</h1>
+  <footer>
+    <span>© <span id="year"></span></span><span class="sep">·</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">闽ICP备2026035356号</a>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+</body>
+</html>
