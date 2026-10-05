@@ -25,3 +25,31 @@ sudo docker compose \
   ps
 curl -fsS http://127.0.0.1:3000/api/status
 ```
+
+## 更新
+
+不自动跟随官方更新。更新前先备份数据库，再检查官方 Compose 是否变更服务名或环境变量：
+
+```bash
+cd /opt/new-api
+sudo mkdir -p -m 0700 /root/backups
+sudo sh -c 'umask 077; docker exec postgres pg_dump -U root new-api > /root/backups/new-api-$(date +%F).sql'
+sudo -u infra-deploy git fetch origin
+sudo -u infra-deploy git diff --stat HEAD..origin/main -- docker-compose.yml
+```
+
+确认变更适配 `compose.production.yml` 后更新并验证：
+
+```bash
+sudo -u infra-deploy git pull --ff-only
+sudo docker compose \
+  --env-file /etc/server-infra/new-api.env \
+  -f /opt/new-api/docker-compose.yml \
+  -f /opt/server-infra/new-api/compose.production.yml \
+  config -q
+sudo docker compose \
+  --env-file /etc/server-infra/new-api.env \
+  -f /opt/new-api/docker-compose.yml \
+  -f /opt/server-infra/new-api/compose.production.yml \
+  up -d --pull always
+```
