@@ -60,3 +60,11 @@ systemctl restart docker
 ### 未配置的子域名
 
 默认仅为已配置域名提供 HTTPS。未知子域名会被默认站点拒绝 TLS 握手，不会显示根域名页面。
+
+### 网关配置未生效
+
+默认通过部署脚本更新网关；脚本会在校验配置后重载 Nginx。若旧版本部署后仍返回旧响应，手动执行：
+
+```bash
+sudo -u infra-deploy docker compose -f /opt/server-infra/gateway/compose.yaml exec -T nginx nginx -s reload
+```
