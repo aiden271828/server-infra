@@ -1,8 +1,8 @@
 # server-infra
 
-服务器共享入口：Nginx 和 HTTPS 证书。
+服务器共享入口：Nginx、HTTPS 证书和 Docker 网络 `edge`。
 
-应用独立部署，由 Nginx 按域名转发。
+应用独立部署，通过 `edge` 由 Nginx 按域名转发。
 
 - [服务器清单](docs/服务器清单.md)：服务器信息、服务状态和跨仓库关联
 - [服务器初始化](docs/bootstrap.md)：首次部署步骤
