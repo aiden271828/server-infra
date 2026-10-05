@@ -9,10 +9,9 @@
    ```
 
 3. 使用只读 Deploy Key，将本仓库克隆到 `/opt/server-infra`，所有者为 `infra-deploy`。
-4. 确认 `gateway/certbot-domains.txt` 的所有域名都解析到本服务器，创建网络并签发证书：
+4. 确认 `gateway/certbot-domains.txt` 的所有域名都解析到本服务器，签发证书：
 
    ```bash
-   docker network create edge
    cd /opt/server-infra
    ./scripts/certbot-init.sh
    ```
@@ -49,3 +48,7 @@ tee /etc/docker/daemon.json >/dev/null <<'EOF'
 EOF
 systemctl restart docker
 ```
+
+### Certbot 注册邮箱
+
+`example@example.com` 不能用于 Let’s Encrypt 注册。当前不设置邮箱，脚本会使用 `--register-unsafely-without-email`；如需接收证书到期通知，再改用真实邮箱。
