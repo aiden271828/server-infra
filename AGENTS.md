@@ -2,21 +2,18 @@
 
 ## 职责
 
-本仓库只管理共享网关：Nginx、Certbot、TLS 续期和外部 Docker 网络 `edge`。应用代码、数据库、Redis、日志和业务密钥不归本仓库管理。
+本仓库只管理 Nginx、Certbot、TLS 续期和 Docker 网络 `edge`。应用代码、数据和密钥不放在本仓库。
 
-## 安全规则
+## 规则
 
-- 禁止输出、提交或复制真实密钥、证书、私钥、`.env`、数据库导出和 Docker 卷内容。
-- 应用的真实运行时密钥只保存在服务器的 `/etc/server-infra/`，由 `root` 持有，文件权限 `0600`。
-- 证书域名不是密钥，统一维护在 `gateway/certbot-domains.txt`；修改后需重新签发证书。
-- 只有网关可以绑定公网 80 和 443；应用经 `edge` 网络由 Nginx 转发，禁止直接向公网开放内部端口。
-- 修改 `gateway/nginx/` 时，所有 HTTP 域名必须保留 `/.well-known/acme-challenge/` 路由；它供 Let's Encrypt 校验域名，删除会导致证书签发或续期失败。
+- 不得输出或提交密钥、私钥、证书、`.env`、数据库导出或 Docker 卷内容。
+- 应用密钥仅存于服务器 `/etc/server-infra/`，由 `root` 持有，文件权限 `0600`。
+- 只有网关能绑定公网 80、443；应用通过 `edge` 网络转发，不开放内部端口。
+- HTTP 域名必须保留 `/.well-known/acme-challenge/`，否则 Let's Encrypt 证书无法签发或续期。
+- 证书域名只维护在 `gateway/certbot-domains.txt`。
 
-## 工作约定
+## 提交与文档
 
-- `master` 是唯一部署分支；每次改动经必要检查后，使用约定式提交并推送。
-- 提交格式为 `<type>: <中文说明>`，例如 `feat: 添加根域名静态页面`。
-- 常用类型为 `feat`（功能）、`fix`（修复）、`docs`（文档）、`chore`（维护）和 `refactor`（重构）；类型保留英文，说明使用中文。
-- GitHub Actions 通过 `production` Environment 部署，必须保留人工审批。
-- 服务器检出目录为 `/opt/server-infra`；应用分别部署在各自目录。
-- 服务清单是跨仓库关联的唯一入口，修改部署状态后同步更新 [docs/服务器清单.md](docs/服务器清单.md)。
+- 只向 `master` 推送；每次改动检查后提交并推送。
+- 提交格式：`<type>: <中文说明>`；类型使用 `feat`、`fix`、`docs`、`chore` 或 `refactor`。
+- 服务状态或跨仓库关联变化时，同步更新 [服务器清单](docs/服务器清单.md)。

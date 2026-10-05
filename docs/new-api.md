@@ -1,12 +1,14 @@
 # New API
 
-- 上游仓库：`https://github.com/QuantumNous/new-api.git`
-- 服务器目录：`/opt/new-api`
-- 公网域名：`ai.shenyuhan.online`
-- 容器地址：`new-api:3000`（仅 `edge` Docker 网络内可访问）
+在 `/opt/new-api` 克隆官方仓库，并使用其 Docker Compose 配置部署 New API、PostgreSQL 和 Redis。
 
-使用上游 Docker Compose 部署，保留 PostgreSQL 和 Redis；删除 `3000:3000` 端口映射，并让 `new-api` 服务加入外部网络 `edge`。
+- 删除 `3000:3000` 端口映射。
+- 让 `new-api` 服务加入外部 Docker 网络 `edge`。
+- Nginx 通过 `ai.shenyuhan.online` 转发到 `new-api:3000`。
+- 将 `POSTGRES_PASSWORD`、`SESSION_SECRET`、`CRYPTO_SECRET` 写入 `/etc/server-infra/new-api.env`，权限设为 `0600`。
 
-真实值写入 `/etc/server-infra/new-api.env`（权限 `0600`），Compose 通过 `--env-file /etc/server-infra/new-api.env` 启动。至少配置互不相同的 `POSTGRES_PASSWORD`、`SESSION_SECRET` 和 `CRYPTO_SECRET`。
+启动时使用：
 
-首次管理员初始化通过 `https://ai.shenyuhan.online` 完成，禁止为此临时公开 3000 端口。
+```bash
+docker compose --env-file /etc/server-infra/new-api.env up -d
+```

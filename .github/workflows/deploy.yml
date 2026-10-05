@@ -1,4 +1,4 @@
-name: Deploy gateway
+name: 部署网关
 
 on:
   push:
@@ -18,11 +18,11 @@ concurrency:
 
 jobs:
   deploy:
-    name: Deploy to ECS
+    name: 部署到服务器
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Configure SSH
+      - name: 配置 SSH
         env:
           DEPLOY_KEY: ${{ secrets.SERVER_DEPLOY_PRIVATE_KEY }}
           KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
