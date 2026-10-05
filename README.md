@@ -12,4 +12,4 @@
 
 ## 密钥
 
-真实密钥、证书和运行数据均不进入 Git。ECS 上的密钥文件统一保存在 `/etc/server-infra/`（`root` 所有，目录 `0700`、文件 `0600`）。
+真实密钥、证书和运行数据均不进入 Git。ECS 上的密钥文件统一保存在 `/etc/server-infra/`（`root` 所有，目录 `0700`、文件 `0600`）。证书域名列表属于非敏感基础设施配置，保存在 `gateway/certbot-domains.txt` 并由 Git 管理。

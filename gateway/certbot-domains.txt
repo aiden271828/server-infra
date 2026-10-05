@@ -1,0 +1,5 @@
+# 一行一个域名。修改此文件后，重新签发证书以更新证书的域名列表。
+shenyuhan.online
+www.shenyuhan.online
+go.shenyuhan.online
+ai.shenyuhan.online

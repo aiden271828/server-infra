@@ -8,7 +8,7 @@
    sudo install -d -m 700 -o root -g root /etc/server-infra
    ```
 
-4. 创建共享网络并签发证书：
+4. 确认 `gateway/certbot-domains.txt` 中的全部域名都已解析到该 ECS，再创建共享网络并签发证书：
 
    ```bash
    docker network create edge
