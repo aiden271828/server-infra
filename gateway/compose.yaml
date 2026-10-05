@@ -1,0 +1,39 @@
+name: gateway
+
+services:
+  nginx:
+    image: nginx:1.29-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - letsencrypt:/etc/letsencrypt:ro
+      - certbot-webroot:/var/www/certbot:ro
+    networks: [edge]
+    logging:
+      driver: local
+      options:
+        max-size: 16m
+        max-file: "8"
+
+  certbot:
+    image: certbot/certbot:latest
+    profiles: [certbot]
+    ports:
+      - "80:80"
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+      - certbot-webroot:/var/www/certbot
+
+networks:
+  edge:
+    name: edge
+    external: true
+
+volumes:
+  letsencrypt:
+    name: gateway_letsencrypt
+  certbot-webroot:
+    name: gateway_certbot_webroot

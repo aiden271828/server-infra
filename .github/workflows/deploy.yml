@@ -1,0 +1,36 @@
+name: Deploy gateway
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/deploy.yml"
+      - "gateway/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-gateway
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to ECS
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Configure SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.ECS_DEPLOY_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.ECS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "$DEPLOY_KEY"
+          ssh -o BatchMode=yes "${{ vars.ECS_DEPLOY_USER }}@${{ vars.ECS_HOST }}" \
+            "/opt/server-infra/scripts/deploy.sh '${{ github.sha }}'"
