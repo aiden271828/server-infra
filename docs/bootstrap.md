@@ -52,3 +52,7 @@ systemctl restart docker
 ### Certbot 注册邮箱
 
 `example@example.com` 不能用于 Let’s Encrypt 注册。当前不设置邮箱，脚本会使用 `--register-unsafely-without-email`；如需接收证书到期通知，再改用真实邮箱。
+
+### 网关返回 444
+
+默认使用最新仓库执行证书初始化，脚本完成后会启动正式站点配置。若访问时连接被直接断开，且 Nginx 日志显示 `444`，说明仍在使用仅供签证书的 `00-bootstrap.conf`；拉取最新仓库后重新启动网关。
