@@ -17,7 +17,7 @@
    ./scripts/certbot-init.sh
    ```
 
-5. 在 GitHub 创建需审批的 `production` Environment，并配置：
+5. 在 GitHub 创建 `production` Environment，并配置：
 
    | 类型 | 名称 |
    | --- | --- |

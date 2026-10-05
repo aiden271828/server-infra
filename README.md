@@ -8,4 +8,4 @@
 - [服务器初始化](docs/bootstrap.md)：首次部署步骤
 - [New API](docs/new-api.md)：New API 的部署约定
 
-`master` 是唯一部署分支。推送触发 GitHub Actions，`production` Environment 必须保留人工审批。
+网关更新由 GitHub Actions 自动部署。

@@ -1,10 +1,8 @@
-# server-infra Agent 指南
-
-## 职责
+# 职责
 
 本仓库只管理 Nginx、Certbot、TLS 续期和 Docker 网络 `edge`。应用代码、数据和密钥不放在本仓库。
 
-## 规则
+# 规则
 
 - 不得输出或提交密钥、私钥、证书、`.env`、数据库导出或 Docker 卷内容。
 - 应用密钥仅存于服务器 `/etc/server-infra/`，由 `root` 持有，文件权限 `0600`。
@@ -12,8 +10,10 @@
 - HTTP 域名必须保留 `/.well-known/acme-challenge/`，否则 Let's Encrypt 证书无法签发或续期。
 - 证书域名只维护在 `gateway/certbot-domains.txt`。
 
-## 提交与文档
+# 提交与文档
 
-- 只向 `master` 推送；每次改动检查后提交并推送。
-- 提交格式：`<type>: <中文说明>`；类型使用 `feat`、`fix`、`docs`、`chore` 或 `refactor`。
+- 所有提交必须符合 Conventional Commits，格式为 `<type>: <中文说明>`。
+- 类型使用 `feat`（功能）、`fix`（修复）、`docs`（文档）、`chore`（维护）或 `refactor`（重构）。
+- 示例：`feat: 添加根域名静态页面`、`fix: 修复证书续期配置`、`docs: 更新服务器清单`。
+- 一次提交只处理一个独立目的；说明简短明确，不使用句号。
 - 服务状态或跨仓库关联变化时，同步更新 [服务器清单](docs/服务器清单.md)。
