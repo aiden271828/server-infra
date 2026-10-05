@@ -1,7 +1,7 @@
 # New API
 
 - 上游仓库：`https://github.com/QuantumNous/new-api.git`
-- ECS 目录：`/opt/new-api`
+- 服务器目录：`/opt/new-api`
 - 公网域名：`ai.shenyuhan.online`
 - 容器地址：`new-api:3000`（仅 `edge` Docker 网络内可访问）
 

@@ -24,13 +24,13 @@ jobs:
     steps:
       - name: Configure SSH
         env:
-          DEPLOY_KEY: ${{ secrets.ECS_DEPLOY_PRIVATE_KEY }}
-          KNOWN_HOSTS: ${{ secrets.ECS_KNOWN_HOSTS }}
+          DEPLOY_KEY: ${{ secrets.SERVER_DEPLOY_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
         run: |
           install -d -m 700 ~/.ssh
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
           eval "$(ssh-agent -s)"
           ssh-add - <<< "$DEPLOY_KEY"
-          ssh -o BatchMode=yes "${{ vars.ECS_DEPLOY_USER }}@${{ vars.ECS_HOST }}" \
+          ssh -o BatchMode=yes "${{ vars.SERVER_DEPLOY_USER }}@${{ vars.SERVER_HOST }}" \
             "/opt/server-infra/scripts/deploy.sh '${{ github.sha }}'"
