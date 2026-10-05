@@ -7,7 +7,7 @@
 ## 安全规则
 
 - 禁止输出、提交或复制真实密钥、证书、私钥、`.env`、数据库导出和 Docker 卷内容。
-- 真实运行时密钥只保存在 ECS 的 `/etc/server-infra/`，由 `root` 持有，文件权限 `0600`。
+- 应用的真实运行时密钥只保存在 ECS 的 `/etc/server-infra/`，由 `root` 持有，文件权限 `0600`。
 - 证书域名不是密钥，统一维护在 `gateway/certbot-domains.txt`；修改后需重新签发证书。
 - 只有网关可以绑定公网 80 和 443；应用经 `edge` 网络由 Nginx 转发，禁止直接向公网开放内部端口。
 - 修改 `gateway/nginx/` 时，保留 `/.well-known/acme-challenge/` 路由。
