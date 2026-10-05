@@ -1,0 +1,24 @@
+services:
+  new-api:
+    environment:
+      SQL_DSN: postgresql://root:${POSTGRES_PASSWORD}@postgres:5432/new-api
+      REDIS_CONN_STRING: redis://:${REDIS_PASSWORD}@redis:6379
+      SESSION_SECRET: ${SESSION_SECRET}
+      SESSION_COOKIE_SECURE: "true"
+      SESSION_COOKIE_TRUSTED_URL: https://ai.shenyuhan.online
+      TRUSTED_PROXIES: ${EDGE_SUBNET}
+    networks:
+      - new-api-network
+      - edge
+
+  redis:
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+networks:
+  edge:
+    name: edge
+    external: true
