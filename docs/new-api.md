@@ -30,6 +30,8 @@ curl -fsS http://127.0.0.1:3000/api/status
 
 不自动跟随官方更新。更新前先备份数据库，再检查官方 Compose 是否变更服务名或环境变量：
 
+官方更新文档：[New API 系统更新指南](https://docs.newapi.ai/zh/docs/installation/config-maintenance/system-update)。
+
 ```bash
 cd /opt/new-api
 sudo mkdir -p -m 0700 /root/backups
