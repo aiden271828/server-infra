@@ -25,3 +25,27 @@
    | Secret | `SERVER_KNOWN_HOSTS` |
    | Variable | `SERVER_HOST` |
    | Variable | `SERVER_DEPLOY_USER` |
+
+## 已验证的问题处理
+
+### 系统更新中断或出现 SSH 配置选择
+
+默认执行 `apt update && apt upgrade -y`。若出现 OpenSSH 配置选择且服务器通过密钥登录，选择“保留当前本地配置”；若更新显示中断，依次执行：
+
+```bash
+dpkg --configure -a
+apt -f install -y
+apt update
+apt upgrade -y
+```
+
+### Docker Hub 拉取超时
+
+默认直连 Docker Hub。若 `docker pull` 出现 `i/o timeout`，配置 DaoCloud 镜像源后重试：
+
+```bash
+tee /etc/docker/daemon.json >/dev/null <<'EOF'
+{"registry-mirrors":["https://docker.m.daocloud.io"]}
+EOF
+systemctl restart docker
+```
