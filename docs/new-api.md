@@ -26,6 +26,10 @@ sudo docker compose \
 curl -fsS http://127.0.0.1:3000/api/status
 ```
 
+## 后台页面显示 429
+
+默认保留 API 与关键操作的限流。若后台页面因代理出口共用、并发加载静态资源而显示 `429 Too Many Requests`，在 `compose.production.yml` 显式设置 `GLOBAL_WEB_RATE_LIMIT_ENABLE: "false"`，然后重新执行上面的 `up -d` 命令；这只关闭网页全局限流。
+
 ## 更新
 
 不自动跟随官方更新。更新前先备份数据库，再检查官方 Compose 是否变更服务名或环境变量：

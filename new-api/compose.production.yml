@@ -7,6 +7,8 @@ services:
       SESSION_COOKIE_SECURE: "true"
       SESSION_COOKIE_TRUSTED_URL: https://ai.shenyuhan.online
       TRUSTED_PROXIES: ${EDGE_SUBNET}
+      # 后台页面常会并发加载较多静态资源；关闭网页全局限流，保留 API 与关键操作限流。
+      GLOBAL_WEB_RATE_LIMIT_ENABLE: "false"
     networks:
       - new-api-network
       - edge
