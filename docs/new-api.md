@@ -1,5 +1,9 @@
 # New API
 
+## 网络
+
+`new-api-network` 的 MTU 固定为 `1450`，并是 New API 容器的默认出站网关。`edge` 网络只用于 Nginx 转发进入的请求，保持默认 MTU。这样可避免大图片响应在 Docker bridge 网络中传输不完整。
+
 官方仓库位于 `/opt/new-api`。保留官方 `3000:3000` 映射；服务器安全组不开放 3000。
 
 首次部署：

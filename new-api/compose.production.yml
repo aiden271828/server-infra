@@ -8,8 +8,10 @@ services:
       SESSION_COOKIE_TRUSTED_URL: https://ai.shenyuhan.online
       TRUSTED_PROXIES: ${EDGE_SUBNET}
     networks:
-      - new-api-network
-      - edge
+      new-api-network:
+        gw_priority: 1
+      edge:
+        gw_priority: 0
 
   redis:
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
@@ -19,6 +21,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
 networks:
+  new-api-network:
+    driver_opts:
+      com.docker.network.driver.mtu: "1450"
   edge:
     name: edge
     external: true
