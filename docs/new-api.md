@@ -19,6 +19,19 @@ sudo docker compose \
 
 密钥仅保存在 `/etc/server-infra/new-api.env`（`0600`）。服务加入共享网络 `edge`；确认 New API 正常后，再将 `ai.shenyuhan.online` 从 `503` 切换为反向代理。
 
+## 重启
+
+普通重启不更新镜像或 Compose 配置：
+
+```bash
+cd /opt/new-api
+sudo docker compose \
+  --env-file /etc/server-infra/new-api.env \
+  -f /opt/new-api/docker-compose.yml \
+  -f /opt/server-infra/new-api/compose.production.yml \
+  restart
+```
+
 验证：
 
 ```bash
