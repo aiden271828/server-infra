@@ -6,7 +6,10 @@
   <style>
     html, body { margin: 0; min-height: 100vh; }
     body { display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: system-ui, -apple-system, sans-serif; background: #fbf4e6; color: #794f27; }
-    h1 { font-size: 2rem; font-weight: 700; margin: 0; }
+    h1 { font-size: clamp(1.35rem, 6vw, 2rem); font-weight: 700; margin: 0; padding: 0 1rem; text-align: center; letter-spacing: .04em; }
+    .caret { display: inline-block; width: .08em; height: 1em; margin-left: .12em; vertical-align: -.12em; background: currentColor; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .caret { display: none; } }
     footer { position: fixed; left: 0; right: 0; bottom: 0; padding: 1rem; text-align: center; font-size: .72rem; color: #a08a6b; }
     footer a { color: inherit; text-decoration-color: #d8c7a8; text-underline-offset: 3px; }
     footer a:hover { color: #19c8b9; }
@@ -14,10 +17,31 @@
   </style>
 </head>
 <body>
-  <h1>Hello</h1>
+  <h1 id="line" aria-label="正是江南好风景，落花时节又逢君。"><span id="typed" aria-hidden="true"></span><span class="caret" id="caret" aria-hidden="true"></span></h1>
   <footer>
     <span>© <span id="year"></span></span><span class="sep">·</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">闽ICP备2026035356号</a>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear()
+
+    const TEXT = '正是江南好风景，落花时节又逢君。'
+    const target = document.getElementById('typed')
+    const caret = document.getElementById('caret')
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      target.textContent = TEXT
+      caret.remove()
+    } else {
+      let i = 0
+      const step = () => {
+        i += 1
+        target.textContent = TEXT.slice(0, i)
+        if (i < TEXT.length) {
+          setTimeout(step, 70 + Math.random() * 35)
+        }
+      }
+      setTimeout(step, 200)
+    }
+  </script>
 </body>
 </html>
